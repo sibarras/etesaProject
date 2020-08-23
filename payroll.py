@@ -23,38 +23,40 @@ import pandas as pd
 # debe ser menor a 30% en oficina. Debe generar los espacios faltantes para poder lograr este porcentaje.
 
 # defino funciones que simularan las peticiones a realizar
-equipmentTests = {
-    'PT': [tests[i] for i in []],
-    'CT': '',
-    'INT': '',
-    'TX': '',
-    'RX': ''
-}
-
 tests = [
     'Tiempos de Operacion',         #0
     'Resistencia de Contacto',      #1
     'Resistencia de Aislamiento',   #2
     'Resistencia de Devanados',     #3
-    'Realcion de Vueltas',          #4
+    'Relacion de Vueltas',          #4
     'Factor de Potencia',           #5
     'Analisis de Gas SF6',          #6
-    'Alarmas y Disparos',           #7
-    'Analis de Calidad de Energia', #8
-    'Corriente de Excitacion',      #9
-    'Saturacion'                    #10
+    'Analis de Calidad de Energia', #7
+    'Corriente de Excitacion',      #8
+    'Saturacion'                    #9
+    'Alarmas',                      #10
+    'Disparos',                     #11
+    'Bloqueos',                     #12
+    'Tratamiento de gas SF6',       #13
+    
 ]
 
+equipmentTests = {
+    'PT': [tests[i] for i in [5, 2]],
+    'CT': [tests[i] for i in [2, 3, 4, 5, 8, 9]],
+    'INT': [tests[i] for i in [0, 1, 6, 10, 12]],
+    'TX': [tests[i] for i in [5, 8, 4, 3, 10, 11]],
+    'RX': [tests[i] for i in [5, 10, 11]]
+}
 
 
-
-define addWork(description=str, place=str, day=str, starthour=str, endhour=str):
+def addWork(description=str, place=str, day=str, starthour=str, endhour=str):
     pass
 
-define freeDay(reason=str, day=str):
+def freeDay(reason=str, day=str):
     pass
 
-def main:
+def main():
     pass
 
 
