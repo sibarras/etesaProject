@@ -1,4 +1,5 @@
-import pandas as pd
+from openpyxl import load_workbook
+PATH = './Excel Books/'
 
 # para escribir en una sheet de excel necesitas dividir cada informacion
 
@@ -37,10 +38,8 @@ tests = [
     'Alarmas',                      #10
     'Disparos',                     #11
     'Bloqueos',                     #12
-    'Tratamiento de gas SF6',       #13
-    
+    'Tratamiento de gas SF6',       #13 
 ]
-
 equipmentTests = {
     'PT': [tests[i] for i in [5, 2]],
     'CT': [tests[i] for i in [2, 3, 4, 5, 8, 9]],
@@ -50,15 +49,24 @@ equipmentTests = {
 }
 
 
-def addWork(description=str, place=str, day=str, starthour=str, endhour=str):
-    pass
+# def addWork(description=str, place=str, day=str, starthour=str, endhour=str):
+#     pass
 
-def freeDay(reason=str, day=str):
-    pass
+# def freeDay(reason=str, day=str):
+#     pass
 
-def main():
-    pass
+# Abro el primer archivo y lo declaro como payroll workbook
+# payroll_filename = 'payroll_layout.xlsx'
+# payroll_wb = load_workbook(PATH + payroll_filename)
 
+#abro el segundo archivo y lo declaro como accounts workbook
+accounts_filename = 'accounts_PyM.xlsx'
+accounts_wb = load_workbook(PATH + accounts_filename, data_only=True)
 
-if __name__ == "__main__":
-    main()
+accounts_sheet = accounts_wb['CUENTAS ETESA']
+accounts_sheet.auto_filter.ref = 'B5:I727'
+accounts_sheet.auto_filter.add_filter_column(2,['430403', '430401'])
+print(accounts_sheet.dimensions)
+accounts_sheet.delete_rows()
+accounts_wb.save("try.xlsx")
+

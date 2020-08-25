@@ -2,3 +2,4 @@
 venv/
 secret*
 __pycache__
+"Excel Books"/
