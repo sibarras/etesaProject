@@ -47,28 +47,35 @@ for place in account_list:
 print(place_data.keys())
 # Otros datos a utilizar
 tests = [
-    'Tiempos de Operacion',         #0
-    'Resistencia de Contacto',      #1
-    'Resistencia de Aislamiento',   #2
-    'Resistencia de Devanados',     #3
-    'Relacion de Vueltas',          #4
-    'Factor de Potencia',           #5
-    'Analisis de Gas SF6',          #6
-    'Analis de Calidad de Energia', #7
-    'Corriente de Excitacion',      #8
-    'Saturacion',                    #9
-    'Alarmas',                      #10
-    'Disparos',                     #11
-    'Bloqueos',                     #12
-    'Tratamiento de gas SF6',       #13 
+    'Tiempos de Operacion',             #0
+    'Resistencia de Contacto',          #1
+    'Resistencia de Aislamiento',       #2
+    'Resistencia de Devanados',         #3
+    'Relacion de Vueltas',              #4
+    'Factor de Potencia',               #5
+    'Analisis de Gas SF6',              #6
+    'Analisis de Calidad de Energia',   #7
+    'Corriente de Excitacion',          #8
+    'Saturacion',                       #9
+    'Alarmas',                          #10
+    'Disparos',                         #11
+    'Bloqueos',                         #12
+    'Tratamiento de gas SF6',           #13
+    'Collar Caliente',                  #14
+    'Inspeccion Termografica',          #15
+    'Surge Arrest',                     #16
 ]
 equipmentTests = {
     'PT': [tests[i] for i in [5, 2]],
     'CT': [tests[i] for i in [2, 3, 4, 5, 8, 9]],
     'INT': [tests[i] for i in [0, 1, 6, 10, 12]],
     'TX': [tests[i] for i in [5, 8, 4, 3, 10, 11]],
-    'RX': [tests[i] for i in [5, 10, 11]]
+    'RX': [tests[i] for i in [5, 3, 10, 11]],
+    'TTX': [tests[i] for i in [8, 5, 3, 10, 11]],
+    'Pararrayos': [tests[i] for i in [16, 2]],
+    'Termo': [tests[15]]
 }
+
 se = 'Subestación '
 nombre_SE = {
     'SPANAMA2': se+'Panamá II',
@@ -221,13 +228,13 @@ for part in reversed(ced_parts):
     ced_slots.pop()
 
 # Datos periodo
-quincena, mes = 2, 8
+quincena, mes = 2, 10
 
 # Aplicar
 year = int(str(datetime.datetime.now()).split()[0].split('-')[0])
-nombre_mes = calendar.month_name[mes]
-dia_fin_mes = calendar.monthlen(year, mes)
-nombre_dia = lambda d: calendar.day_name[calendar.weekday(year, mes, d)]
+nombre_mes = spanishDict[calendar.month_name[mes]]
+dia_fin_mes = calendar._monthlen(year, mes)
+nombre_dia = lambda d: spanishDict[calendar.day_name[calendar.weekday(year, mes, d)]]
 periodo_planilla = lambda : 1 if quincena == 1 else 16,\
                     lambda : f'15 de {nombre_mes}' if quincena == 1 else f'{dia_fin_mes} de {nombre_mes}' 
 
@@ -238,11 +245,11 @@ extra_ws[periodo_cells[1]] = periodo_planilla[1]().upper()
 # Datos de trabajo realizado
 # Debes hacerle un sort a cada parte de los trabajos por los dias de referencia
 works = {
-    'place':['SPANAMA', 'SPANAMA2', 'SPANAMA'],
-    'day':[23, 26, 30],
-    'init':['3:30', '6:00', '3:30'],
-    'end':['6:45', '7:00', '4:30'],
-    'equip':['CT', 'TX', 'PT']
+    'place':['SCHORRE', 'SLLSANC', 'SLLSANC', 'SLLSANC', 'SLLSANC'],
+    'day':[21, 24, 25, 26, 29],
+    'init':['3:30', '1:00', '7:20', '3:30', '5:00'],
+    'end':['5:00', '7:50', '18:30', '4:20', '6:00'],
+    'equip':['Termo', 'Termo', 'TX', 'Termo', 'Termo']
 }
 
 # comprobar datos de trabajo
@@ -287,9 +294,12 @@ for n in range(numWorks):
             pruebas = pruebas[:-2] + ' y ' + test
             continue
         pruebas += test + ', '
-    justificacion_char.append(f'{nombre_dia(works["day"][n])} {works["day"][n]}\
-                               de {nombre_mes} de {year}: Pruebas de {pruebas} \
-                               en {nombre_SE[works["place"][n]]}')
+
+    just_n = '{} {} de {} de {}: Pruebas de {} en {}'.format(
+        nombre_dia(works["day"][n]), works["day"][n], nombre_mes, year,\
+        pruebas, nombre_SE[works["place"][n]])
+    
+    justificacion_char.append(just_n)
 
 # aplicar junto con las horas
 for n in range(numWorks):
@@ -301,7 +311,9 @@ for n in range(numWorks):
 print('horas no laboradas en desarrollo')
 # aplicar
 
+#Preguntar con que nombre guardar el documento
+name = input('Guardar como: ')
 # guardar en nuevo documento
-payroll_wb.save(PATH+'tryDocument.xlsx')
+payroll_wb.save(PATH + f'{name}.xlsx')
 
 
