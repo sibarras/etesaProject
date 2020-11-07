@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>603</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -25,8 +25,8 @@
      <rect>
       <x>280</x>
       <y>520</y>
-      <width>93</width>
-      <height>28</height>
+      <width>121</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -38,8 +38,8 @@
      <rect>
       <x>410</x>
       <y>520</y>
-      <width>93</width>
-      <height>28</height>
+      <width>111</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -66,22 +66,12 @@
      </rect>
     </property>
    </widget>
-   <widget class="QFontComboBox" name="fontComboBoxEquipos">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>320</y>
-      <width>226</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="lineEditNameID">
     <property name="geometry">
      <rect>
-      <x>570</x>
+      <x>590</x>
       <y>350</y>
-      <width>201</width>
+      <width>181</width>
       <height>21</height>
      </rect>
     </property>
@@ -91,7 +81,7 @@
      </font>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="label_equipment">
     <property name="geometry">
      <rect>
       <x>490</x>
@@ -104,7 +94,7 @@
      <string>Equipo:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="label_inithour">
     <property name="geometry">
      <rect>
       <x>490</x>
@@ -117,7 +107,7 @@
      <string>Hora Inicial:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="label_endhour">
     <property name="geometry">
      <rect>
       <x>490</x>
@@ -130,17 +120,7 @@
      <string>Hora Final:</string>
     </property>
    </widget>
-   <widget class="QFontComboBox" name="fontComboBoxPlace">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>380</y>
-      <width>226</width>
-      <height>22</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="label_place">
     <property name="geometry">
      <rect>
       <x>490</x>
@@ -153,7 +133,7 @@
      <string>Lugar:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="label_equipment_id">
     <property name="geometry">
      <rect>
       <x>490</x>
@@ -202,12 +182,12 @@
      <string>Eliminar Trabajo Seleccionado</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="label_colaborator">
     <property name="geometry">
      <rect>
       <x>30</x>
       <y>90</y>
-      <width>71</width>
+      <width>91</width>
       <height>16</height>
      </rect>
     </property>
@@ -215,37 +195,17 @@
      <string>Colaborador:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="label_coordination">
     <property name="geometry">
      <rect>
       <x>490</x>
       <y>90</y>
-      <width>71</width>
+      <width>101</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>Coordinación:</string>
-    </property>
-   </widget>
-   <widget class="QFontComboBox" name="fontComboBoxColaborator">
-    <property name="geometry">
-     <rect>
-      <x>110</x>
-      <y>90</y>
-      <width>341</width>
-      <height>21</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QFontComboBox" name="fontComboBoxCoordination">
-    <property name="geometry">
-     <rect>
-      <x>564</x>
-      <y>90</y>
-      <width>211</width>
-      <height>21</height>
-     </rect>
     </property>
    </widget>
    <widget class="QListView" name="listViewColaborator">
@@ -281,7 +241,7 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="label_8">
+   <widget class="QLabel" name="label_mainTitle">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -301,7 +261,7 @@
      <string>GENERADOR DE PLANILLAS - DOM - ETESA</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_9">
+   <widget class="QLabel" name="labelTitleColaborator">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -321,7 +281,7 @@
      <string>DATOS DEL COLABORADOR</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_10">
+   <widget class="QLabel" name="labelTitleCoordination">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -341,7 +301,7 @@
      <string>DATOS DE LA COORDINACIÓN</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_11">
+   <widget class="QLabel" name="labelTitleWorks">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -361,7 +321,7 @@
      <string>TRABAJOS REALIZADOS EN LA QUINCENA ACTUAL</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_12">
+   <widget class="QLabel" name="labelTitleNewWork">
     <property name="geometry">
      <rect>
       <x>540</x>
@@ -418,6 +378,46 @@
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBoxColaborators">
+    <property name="geometry">
+     <rect>
+      <x>138</x>
+      <y>90</y>
+      <width>311</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBoxCoordinations">
+    <property name="geometry">
+     <rect>
+      <x>598</x>
+      <y>90</y>
+      <width>181</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBoxEquipments">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>320</y>
+      <width>181</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBoxSubstations">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>380</y>
+      <width>181</width>
+      <height>22</height>
+     </rect>
     </property>
    </widget>
   </widget>

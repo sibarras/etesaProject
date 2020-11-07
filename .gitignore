@@ -2,4 +2,4 @@
 env/
 secret*
 __pycache__
-"Excel Books"/
+"Excel Books"/results/

@@ -21,7 +21,7 @@ tests = [
 ]
 
 
-equipmentGeneralTest = {
+equipmentGeneralTests = {
     'PT': [tests[i] for i in [17]],
     'CT': [tests[i] for i in [17]],
     'INT': [tests[i] for i in [17, 13, 10, 12]],
@@ -43,16 +43,16 @@ nombres_generales = {
     'Termo': 'Patio de 230 y 115'
 }
 
-equipmentTests = {
-    'PT': [tests[i] for i in [5, 2]],
-    'CT': [tests[i] for i in [2, 3, 4, 5, 8, 9]],
-    'INT': [tests[i] for i in [0, 1, 6, 10, 12]],
-    'TX': [tests[i] for i in [5, 8, 4, 3, 10, 11]],
-    'RX': [tests[i] for i in [5, 3, 10, 11]],
-    'TTX': [tests[i] for i in [8, 5, 3, 10, 11]],
-    'Pararrayos': [tests[i] for i in [16, 2]],
-    'Termo': [tests[15]]
-}
+# equipmentTests = {
+#     'PT': [tests[i] for i in [5, 2]],
+#     'CT': [tests[i] for i in [2, 3, 4, 5, 8, 9]],
+#     'INT': [tests[i] for i in [0, 1, 6, 10, 12]],
+#     'TX': [tests[i] for i in [5, 8, 4, 3, 10, 11]],
+#     'RX': [tests[i] for i in [5, 3, 10, 11]],
+#     'TTX': [tests[i] for i in [8, 5, 3, 10, 11]],
+#     'Pararrayos': [tests[i] for i in [16, 2]],
+#     'Termo': [tests[15]]
+# }
 
 se = 'Subestación '
 nombre_SE = {

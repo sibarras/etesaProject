@@ -8,7 +8,6 @@ def excel_to_pdf(wb_name:str, PATH='C:\\Users\\Samuel\\Desktop\\Projects\\etesaP
     excel.Visible = False
 
     try:
-        print('Start conversion to PDF')
         wb = excel.Workbooks.Open(wb_PATH)
         wb.WorkSheets([1,2]).Select()
         wb.ActiveSheet.ExportAsFixedFormat(0, pdf_PATH)
@@ -17,5 +16,3 @@ def excel_to_pdf(wb_name:str, PATH='C:\\Users\\Samuel\\Desktop\\Projects\\etesaP
     finally:
         wb.Close()
         excel.Quit()
-
-excel_to_pdf('prueba')

@@ -1,5 +1,6 @@
 from excel_handler import ExcelHandler
 from datetime import datetime, date
+import os
 import calendar
 import programData
 
@@ -48,27 +49,28 @@ class ExtraHours(ExcelHandler):
         self.sindical_cells = [f'{dias_col}43' for dias_col in dias_cols]
         self.otros_cells = [f'{dias_col}44' for dias_col in dias_cols]
 
-    def write_personal_data(self, personal_data:dict):
-        # Ahora introducir estos datos en el extra worksheet
-        self.ws[self.nombre_cell] = personal_data['nombre'].upper()
-        self.ws[self.numEmpleado_cell] = personal_data['num_empleado']
-        self.ws[self.gerencia_cell] = personal_data['gerencia'].upper()
-        self.ws[self.depto_cell] = personal_data['depto'].upper()
-        self.ws[self.cargo_cell] = personal_data['cargo'].upper()
+    def write_personal_data(self, personal_data):
+        # Ahora introducir estos datos en el extra worksheet (DATAFRAME DE PANDAS COMO ENTRADA)
+        self.ws[self.nombre_cell] = personal_data['nombre'].values[0].upper()
+        self.ws[self.numEmpleado_cell] = personal_data['num_empleado'].values[0]
+        self.ws[self.gerencia_cell] = personal_data['gerencia'].values[0].upper()
+        self.ws[self.depto_cell] = personal_data['depto'].values[0].upper()
+        self.ws[self.cargo_cell] = personal_data['cargo'].values[0].upper()
 
         # cedula
-        ced_parts = personal_data['cedula'].split('-')
+        cedula_cells = self.cedula_cells[:]
+        ced_parts = personal_data['cedula'].values[0].split('-')
         ced_slots = ([1,5,5] if len(ced_parts)== 3 else [1,2,3,5])
-        for cell in self.cedula_cells:
+        for cell in cedula_cells:
             self.ws[cell] = 0
 
         # aplicar
         for part in reversed(ced_parts):
             for num in reversed(part):
-                self.ws[self.cedula_cells[-1]] = num
-                self.cedula_cells.pop()
-            while len(self.cedula_cells) > sum(ced_slots[:-1]):
-                self.cedula_cells.pop()
+                self.ws[cedula_cells[-1]] = num
+                cedula_cells.pop()
+            while len(cedula_cells) > sum(ced_slots[:-1]):
+                cedula_cells.pop()
             ced_slots.pop()
 
     def write_time_data(self, spanishDict=programData.spanishDict):
@@ -90,7 +92,7 @@ class ExtraHours(ExcelHandler):
         self.works = works
         self.__data_validation()
         self.__write_codes_and_days(accounts_data)
-        self.__make_justifications(programData.equipmentGeneralTest, programData.nombres_generales, programData.nombre_SE)
+        self.__make_justifications(programData.equipmentGeneralTests, programData.nombres_generales, programData.nombre_SE)
         self.__write_justification_and_hours()
 
     def __data_validation(self):
@@ -135,12 +137,12 @@ class ExtraHours(ExcelHandler):
             self.ws[self.lugar_cells(self.works['day'][n]-(1 if self.half==1 else 16), code_index)]\
                                     = horas_trabajo(self.works['init'][n], self.works['end'][n])
 
-    def __make_justifications(self, equipmentTests, nombres_generales, nombre_SE): # USA LOS VALORES DE LOS TEST PARA REALIZAR SU TRABAJO
+    def __make_justifications(self, equipmentGeneralTests, nombres_generales, nombre_SE): # USA LOS VALORES DE LOS TEST PARA REALIZAR SU TRABAJO
 
         self.justification_char = []
         for n in range(self.works_count):
             pruebas = ''
-            testList = equipmentTests[self.works['equip'][n]]
+            testList = equipmentGeneralTests[self.works['equip'][n]]
             if len(testList) == 1:  # Determina si solo hay 1 prueba
                 pruebas = testList[0]
             else:  # Si hay varias pruebas
@@ -174,16 +176,26 @@ class ExtraHours(ExcelHandler):
 
             self.ws[self.horaInicial_cells[n]] = init
             self.ws[self.horaFinal_cells[n]] = end
+        
+        # Para guardar el documento sugerimos el siguiente nombre
+        self.suggested_output_filename = 'Planilla {} 15na de {} de {}'.format(('1ra' if self.half==1 else '2da'), self.nombre_mes, self.year)
 
     def write_non_worked_days(self):
-            print('horas no laboradas en desarrollo')
+        pass
+        # print('horas no laboradas en desarrollo')
 
-    def save_document(self, output_filename=str):
-
-        PATH = './Excel Books/results/'
-        if len(output_filename) == 0:
-            output_filename = 'Planilla {} 15na de {} de {}'.format(('1ra' if self.half==1 else '2da'), self.nombre_mes, self.year)
-        self.wb.save(PATH + '{}.xlsx'.format(output_filename))
+    def make_folder(self, folder_name:str, path='./"Excel Books"/results/', count=0):
+        try:
+            c = count
+            if folder_name not in os.listdir(path.replace('"Excel Books"', 'Excel Books')):
+                os.system('mkdir {}"{}"'.format(path[2:], folder_name))
+                return folder_name + '\\'
+            else:
+                new = self.make_folder('{}({})'.format(folder_name.split('(')[0],count), count=c+1)
+                return new + '\\'
+        except Exception as e:
+            print('[ERROR]:', e)
+        
 
 # PARA PRUEBA
 if __name__ == '__main__':
@@ -204,13 +216,19 @@ if __name__ == '__main__':
     'day':[23, 26, 30],
     'init':['3:30', '6:00', '3:30'],
     'end':['6:45', '7:00', '4:30'],
-    'equip':['CT', 'TX', 'PT']
+    'equip':['CT', 'TX', 'PT'],
+    'name':['sam', 'iba', 'k']
     }
 
     db_name = './database/accounts.db'
     conn = sqlite3.connect(db_name)
-    accounts_data = pd.read_sql_query('SELECT * FROM accounts', conn)
+    accounts_data = pd.read_sql_query('SELECT * FROM accounts', conn, index_col='index')
     conn.close()
+
+    db_colabs = './database/colaborators.db'
+    conn = sqlite3.connect(db_colabs)
+    colabs_data = pd.read_sql_query('SELECT * FROM colaborators', conn, index_col='index')
+    personal_data = colabs_data.loc[colabs_data['cedula']=='8-892-2460']
 
     wb = ExtraHours(11,2)
     wb.write_personal_data(personal_data)
@@ -218,4 +236,5 @@ if __name__ == '__main__':
     wb.write_works(works, accounts_data)
     wb.write_non_worked_days()
 
-    wb.save_document()
+    print(wb.make_folder('sam'))
+    # wb.save_document()
