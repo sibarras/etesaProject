@@ -71,13 +71,13 @@ class Main_UI(Ui_mainWindow):
                 self.__half = int((1 if int(d)>=1 and int(d)<16 else 2))
 
         except Exception as e:
-            print('[ERROR]: ', e)
+            print('[ERROR ADDING WORKS]: ', e)
     
     def BotonEliminarTrabajo(self):
         try:
             pass
         except Exception as e:
-            print('[ERROR]: ', e)
+            print('[ERROR DELETING JOBS]: ', e)
     
     def __obtenerDatos(self):
         try:
@@ -135,7 +135,7 @@ class Main_UI(Ui_mainWindow):
             model = ListModel(self.personal_data.values[0])
             self.listViewColaborator.setModel(model)
         except Exception as e:
-            print('[ERROR]:', e)
+            print('[ERROR IN COLABORATORS]:', e)
     
     def BotonCrearExcel(self):
         try:
@@ -153,13 +153,13 @@ class Main_UI(Ui_mainWindow):
             self.final_path = results_path + folder_name
             self.__wb.save_document(self.__wb.suggested_output_filename, self.final_path)
         except Exception as e:
-            print('[ERROR]:', e)
+            print('[ERROR CREATING EXCEL]:', e)
     
     def BotonCrearPDF(self):
         try:
             self.__wb.excel_to_pdf(self.__wb.suggested_output_filename, self.final_path)
         except Exception as e:
-            print('[ERROR]:', e)
+            print('[ERROR CREATING PDF]:', e)
     
     def actions_setup(self):
         # Obtener datos desde las bases de datos
