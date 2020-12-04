@@ -1,17 +1,17 @@
 import os
 
-if 'accounts.db' not in os.listdir('./database'):
-    readExcel()
-
 def readExcel():
 
     from openpyxl import load_workbook
     import sqlite3
     import pandas as pd
 
-    PATH = './Excel Books/'
+    db_folder=__file__.rstrip('/sql_data.py').rstrip('/modules') + '/Excel Books'
+    db_folder = os.path.normpath(db_folder)
+
+    PATH = db_folder
     #abro el segundo archivo y lo declaro como accounts workbook
-    accounts_filename = 'accounts_PyM.xlsx'
+    accounts_filename = '/accounts_PyM.xlsx'
     accounts_wb = load_workbook(PATH + accounts_filename, read_only=True, data_only=True)
 
     # Abro la hoja de Cuentas de ETESA
@@ -46,12 +46,19 @@ def readExcel():
 
     # Creo un dataframe con los valores utiles del programa
     df = pd.DataFrame(data=account_list[1:], columns=account_list[0])
-
+    print(df)
     # Guardo este dataframe en una base de datos.
-    try:
-        conn = sqlite3.connect('./database/accounts.db')
-        df.to_sql('accounts', conn)
-    except:
-        print('[ERROR]: La base de datos de cuentas ya existe.')
-    finally:
-        conn.close()
+    # try:
+    #     conn = sqlite3.connect('../database/accounts.db')
+    #     df.to_sql('accounts', conn)
+    #     conn.close()
+    # except:
+    #     print('[ERROR]: La base de datos de cuentas ya existe.')
+
+readExcel()
+# Para verificar
+db_folder=__file__.rstrip('/sql_data.py').rstrip('/modules') + '/database'
+db_folder = os.path.normpath(db_folder)
+
+if 'accounts.db' not in os.listdir(db_folder):
+    readExcel()

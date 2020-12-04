@@ -1,14 +1,15 @@
 #!/usr/bin/python3
-from programData import nombres_generales, nombre_SE
+from modules.program_data import nombres_generales, nombre_SE, spanishDict
 from datetime import date
 import sqlite3
 
-from extra_hours_handler import ExtraHours
+from modules.extra_hours_handler import ExtraHours
+from modules.distribution_handler import Distribution
 import pandas as pd
 import numpy as np
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from pyqt_gui import Ui_mainWindow
+from modules.pyqt_gui import Ui_mainWindow
 
 
 class TableModel(QtCore.QAbstractTableModel):
@@ -59,8 +60,8 @@ class Main_UI(Ui_mainWindow):
             newWorks = self.__darFormatoATrabajos(place, inicio, fin, equip, name)
             self.__InsertarTrabajos(newWorks)
 
-            self.comboBoxEquipments.setCurrentIndex(0)
-            self.comboBoxSubstations.setCurrentIndex(0)
+            # self.comboBoxEquipments.setCurrentIndex(0)
+            # self.comboBoxSubstations.setCurrentIndex(0)
             self.lineEditNameID.setText('')
 
             # Solo se hace al inicio para determinar la quincena
@@ -136,22 +137,41 @@ class Main_UI(Ui_mainWindow):
             self.listViewColaborator.setModel(model)
         except Exception as e:
             print('[ERROR IN COLABORATORS]:', e)
-    
+
+    def add_distribution(self, filename:str, filepath:str):
+        try:
+            wb_dst = Distribution(month=self.__month, half=self.__half, layout_filename=filepath+filename)
+            wb_dst.write_personal_data(self.personal_data)
+            wb_dst.write_time_data(spanishDict=spanishDict)
+            wb_dst.write_works(works=works, accounts_data=self.accounts_data)
+            wb_dst.write_days_outside({})
+            wb_dst.write_non_worked_days({})
+            wb_dst.complete_calendar_hours()
+            wb_dst.save_document(filename, filepath)
+        except Exception as e:
+            print('[ERROR ADDING DISTRIBUTION]:', e)
+            raise e
+
     def BotonCrearExcel(self):
         try:
             if len(list(works.values())[0]) == 0:
                 raise Exception("No se añadieron trabajos...")
             elif self.comboBoxColaborators.currentText() == self.__unselected:
                 raise Exception("No se ha seleccionado un Usuario...")
-            self.__wb = ExtraHours(self.__month, self.__half)
+            self.__wb = ExtraHours(month=self.__month, half=self.__half, layout_filename=payroll_path)
             self.__wb.write_personal_data(self.personal_data)
-            self.__wb.write_time_data()
-            self.__wb.write_works(works, self.accounts_data)
-            self.__wb.write_non_worked_days()
+            self.__wb.write_time_data(spanishDict=spanishDict)
+            self.__wb.write_works(works=works, accounts_data=self.accounts_data)
+            # self.__wb.write_non_worked_days()  # No se usa porque esto se escribe en distribucion
+
             # Generar Archivo
-            folder_name = self.__wb.make_folder(self.__wb.suggested_output_filename)
+            folder_name = self.__wb.make_folder(folder_name=self.__wb.suggested_output_filename, path=results_path)
             self.final_path = results_path + folder_name
             self.__wb.save_document(self.__wb.suggested_output_filename, self.final_path)
+
+            # Anadir la distribucion
+            print(self.final_path+self.__wb.suggested_output_filename)
+            self.add_distribution(self.__wb.suggested_output_filename, self.final_path)
         except Exception as e:
             print('[ERROR CREATING EXCEL]:', e)
     
@@ -201,7 +221,7 @@ if __name__ == '__main__':
     self_path = os.path.abspath(__file__).rstrip(__file__.split('\\')[-1])
     results_path = os.path.join(self_path, 'Excel Books', 'results')
     results_path = os.path.normpath(results_path) + '\\'
-    print(results_path)
+    payroll_path = os.path.normpath(os.path.join(os.getcwd(), 'Excel Books', 'payroll_layout'))
     
     ui = Main_UI()
     ui.setupUi(mainWindow)

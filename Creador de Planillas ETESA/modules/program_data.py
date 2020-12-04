@@ -1,4 +1,3 @@
-
 tests = [
     'Tiempos de Operación',             #0
     'Resistencia de Contacto',          #1
@@ -18,6 +17,11 @@ tests = [
     'Inspección Termográfica',          #15
     'Surge Arrest',                     #16
     'Pruebas Eléctricas',               #17
+    'Inspección',                       #18
+    'Pruebas de Comisionado',           #19
+    'Viaje',                            #20
+    'Pruebas de Rigidez Dieléctrica',   #21
+    'Otros',                            #22
 ]
 
 
@@ -28,8 +32,13 @@ equipmentGeneralTests = {
     'TX': [tests[i] for i in [17, 10, 11]],
     'RX': [tests[i] for i in [17, 10, 11]],
     'TTX': [tests[i] for i in [17, 10, 11]],
-    'Pararrayos': [tests[i] for i in [17]],
-    'Termo': [tests[i] for i in [15]]
+    'PARARR': [tests[i] for i in [17]],
+    'TERMO': [tests[i] for i in [15]],
+    'INS': [tests[i] for i in [18]],
+    'COMIC': [tests[i] for i in [19]],
+    'VIAJE': [tests[i] for i in [20]],
+    'RDIEL': [tests[i] for i in [21]],
+    'OTROS': [tests[i] for i in [22]],
 }
 
 nombres_generales = {
@@ -39,8 +48,13 @@ nombres_generales = {
     'TX': 'Transformador',
     'RX': 'Reactor',
     'TTX': 'Transformador de Tierra',
-    'Pararrayos': 'Grupo de Pararrayos',
-    'Termo': 'Patio de 230 y 115'
+    'PARARR': 'Grupo de Pararrayos',
+    'TERMO': 'Patio de 230 y 115',
+    'INS': 'Inspección de Pruebas',
+    'COMIC': 'Comisionado',
+    'VIAJE': 'Viaje Realizado',
+    'RDIEL': 'Rigidez Dieléctrica',
+    'OTROS': 'Otras Pruebas',
 }
 
 # equipmentTests = {
@@ -82,15 +96,43 @@ nombre_SE = {
     'SBARTOLO': se+'San Bartolo',
     'SHIGO': se+'El Higo'
 }
+se = 'S/E '
+nombre_SE_corto = {
+    'SPANAMA2': se+'Panamá II',
+    'SPANAMA': se+'Panamá',
+    'SCHORRE': se+'Chorrera',
+    'SCACERE': se+'Cáceres',
+    'SLLSANC': se+'Llano Sánchez',
+    'SSTA RITA': se+'Santa Rita',
+    'SVELADER': se+'Veladero',
+    'SMDN': se+'Mata de Nance',
+    'SPROGRE': se+'Progreso',
+    'SGUASQU': se+'Guasquitas',
+    'SCALDER': se+'Caldera',
+    'SCHAZUL': se+'Charco Azul',
+    'SCHANGU': se+'Changuinola',
+    'SCHILIB': se+'Chilibre',
+    'CVALES': se+'Los Valles',
+    'CESTREL': se+'La Etrella',
+    'CPACORA': se+'Pacora',
+    'CBLM1': se+'Bahía Las Minas',
+    'CPAN AM': se+'PANAM',
+    'CESTI': se+'Estí',
+    'CFORT': se+'Fortuna',
+    'CBLM': se+'Bahía Las Minas',
+    'CBAYAN': se+'Bayano',
+    'SBARTOLO': se+'San Bartolo',
+    'SHIGO': se+'El Higo'
+}
 del se
 
 spanishDict = {
     'Monday': 'Lunes',
     'Tuesday': 'Martes',
-    'Wednesday': 'Miercoles',
+    'Wednesday': 'Miércoles',
     'Thursday': 'Jueves',
     'Friday': 'Viernes',
-    'Saturday': 'Sabado',
+    'Saturday': 'Sábado',
     'Sunday': 'Domingo',
     'January': 'Enero',
     'February': 'Febrero',

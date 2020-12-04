@@ -1,13 +1,13 @@
-from excel_handler import ExcelHandler
-from datetime import datetime, date
+from modules import program_data as programData
+from modules.excel_handler import ExcelHandler
+from datetime import date
 import os
 import calendar
-import programData
 
 class ExtraHours(ExcelHandler):
     def __init__(self, month=date.today().month, half=(1 if date.today().day<16 else 2), layout_filename='./Excel Books/payroll_layout'):
         super().__init__(f'{layout_filename}.xlsx')
-        
+
         self.loadWorksheet('EXTRAS')
         self.__load_cells_data()
 
@@ -25,12 +25,13 @@ class ExtraHours(ExcelHandler):
         self.periodo_cells = ['X13','AB13']
 
         lugar_rows = [str(col) for col in range(17, 21+1)]
+
+        codigoLugar_col = 'C'
+        self.codigoLugar_cells = [f'{codigoLugar_col}{lugar_row}' for lugar_row in lugar_rows]
+
         dias_cols = [f'{chr(i)}' for i in range(ord('R'), ord('Z')+1)]\
                     + [f'A{chr(i)}' for i in range(ord('A'), ord('G')+1)]
         self.lugar_cells = lambda col, row: f'{dias_cols[col]}{lugar_rows[row]}'
-        
-        codigoLugar_col = 'C'
-        self.codigoLugar_cells = [f'{codigoLugar_col}{lugar_row}' for lugar_row in lugar_rows]
 
         tarea_rows = [str(col) for col in range(25, 33+1)]
         tarea_col = 'C'
@@ -76,8 +77,8 @@ class ExtraHours(ExcelHandler):
     def write_time_data(self, spanishDict=programData.spanishDict):
 
         self.year = date.today().year
-        self.nombre_mes = programData.spanishDict[calendar.month_name[self.month]]
-        self.nombre_dia = lambda d: programData.spanishDict[calendar.day_name[calendar.weekday(self.year, self.month, d)]]
+        self.nombre_mes = spanishDict[calendar.month_name[self.month]]
+        self.nombre_dia = lambda d: spanishDict[calendar.day_name[calendar.weekday(self.year, self.month, d)]]
         self.dia_fin_mes = calendar._monthlen(self.year, self.month)
 
         periodo_planilla = lambda : 1 if self.half == 1 else 16,\
@@ -90,12 +91,12 @@ class ExtraHours(ExcelHandler):
 
     def write_works(self, works:dict, accounts_data:dict):
         self.works = works
-        self.__data_validation()
+        self._data_validation()
         self.__write_codes_and_days(accounts_data)
         self.__make_justifications(programData.equipmentGeneralTests, programData.nombres_generales, programData.nombre_SE)
         self.__write_justification_and_hours()
 
-    def __data_validation(self):
+    def _data_validation(self):
 
         if self.half not in [1,2]:
             print('ERROR EN VALORES INTRODUCIDOS PARA DETERMINAR CUAL ES LA QUINCENA')
@@ -184,18 +185,17 @@ class ExtraHours(ExcelHandler):
         pass
         # print('horas no laboradas en desarrollo')
 
-    def make_folder(self, folder_name:str, path='./"Excel Books"/results/', count=0):
+    def make_folder(self, folder_name:str, path:str, count=0) -> str:
         try:
             c = count
             if folder_name not in os.listdir(path.replace('"Excel Books"', 'Excel Books')):
-                os.system('mkdir {}"{}"'.format(path[2:], folder_name))
+                os.makedirs(os.path.join(path, folder_name))
                 return folder_name + '\\'
             else:
-                new = self.make_folder('{}({})'.format(folder_name.split('(')[0],count), count=c+1)
-                return new + '\\'
+                new = self.make_folder('{}({})'.format(folder_name.split('(')[0],count), path=path, count=c+1)
+                return new
         except Exception as e:
-            print('[ERROR EN CREACION DE DOCUMENTO]:', e)
-            raise Exception
+            print('[ERROR IN DOCUMENT CREATION]:', e)
 
         
 
@@ -238,5 +238,5 @@ if __name__ == '__main__':
     wb.write_works(works, accounts_data)
     wb.write_non_worked_days()
 
-    print(wb.make_folder('sam'))
+    print(wb.make_folder('sam', path='./Excel Books/results/'))
     # wb.save_document()

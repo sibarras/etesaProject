@@ -1,6 +1,5 @@
 from openpyxl import load_workbook
-import openpyxl
-from excel_to_pdf import excel_to_pdf
+from .excel_to_pdf import excel_to_pdf
 
 class ExcelHandler:
     def __init__(self, file_name:str):
@@ -12,6 +11,7 @@ class ExcelHandler:
     
     def save_document(self, output_filename:str, PATH:str):
         self.wb.save(PATH + '{}.xlsx'.format(output_filename))
+        self.wb.close()
 
     def excel_to_pdf(self, file_name:str, path:str):
         excel_to_pdf(file_name, path)

@@ -2,7 +2,9 @@ import pandas as pd
 import sqlite3
 import os
 
-db_dir = os.listdir('./database')
+db_folder=__file__.rstrip('/etesa_data.py').rstrip('/modules') + '/database'
+db_folder = os.path.normpath(db_folder)
+db_dir = os.listdir(db_folder)
 verification = 'colaborators.db'not in db_dir and __name__ == '__main__'
 
 if verification:
@@ -39,11 +41,11 @@ if verification:
             formatted_dict[category][num] = info
     colaborators = pd.DataFrame(formatted_dict)
 
-    conn = sqlite3.connect('./database/colaborators.db')
+    conn = sqlite3.connect(db_folder+'/colaborators.db')
     colaborators.to_sql('colaborators', conn)
     conn.close()
 else:
-    conn = sqlite3.connect('./database/colaborators.db')
+    conn = sqlite3.connect(db_folder+'/colaborators.db')
   
     res = pd.read_sql_query('SELECT * FROM colaborators', conn, index_col='index', )
     conn.close()
