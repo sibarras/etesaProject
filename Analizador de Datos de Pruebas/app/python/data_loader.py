@@ -1,15 +1,14 @@
 import pandas as pd
 import sqlite3
 import os
-from modules import cells_config
-DB_PATH = os.path.normpath('../database')
-print(DB_PATH)
-def load_data(db_name:str, db_path:str) -> dict:
+from python import cells_config
+
+def load_data(db_name:str) -> dict:
     PLANTILLA_TX = cells_config.PLANTILLA_TX
-    db_dir = os.path.join(db_path, db_name)
+    db_dir = os.path.normpath(db_name)
     df_dict = {}
+    conn = sqlite3.connect(db_dir)
     try:
-        conn = sqlite3.connect(db_dir)
         for hoja in PLANTILLA_TX['hojas'].values():
             tabla = hoja[0]
             df = pd.read_sql_query("SELECT * FROM [{}]".format(tabla), conn)
@@ -32,8 +31,9 @@ if __name__ == "__main__" and False:
     db_path = MAIN_PATH.replace('python', 'database')
     db_names = os.listdir(db_path)
     db_name = db_names[0]
+    db_name = os.path.join(db_path, db_name)
     
-    df_dict = load_data(db_name, db_path=db_path)
+    df_dict = load_data(db_name)
     print(df_dict.keys())
     for df in df_dict.values():
         print(df)
