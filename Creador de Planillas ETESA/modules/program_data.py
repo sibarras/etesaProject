@@ -28,32 +28,32 @@ tests = [
 equipmentGeneralTests = {
     'PT': [tests[i] for i in [17]],
     'CT': [tests[i] for i in [17]],
-    'INT': [tests[i] for i in [17, 13, 10, 12]],
+    'INTERRUPTOR': [tests[i] for i in [17, 13, 10, 12]],
     'TX': [tests[i] for i in [17, 10, 11]],
     'RX': [tests[i] for i in [17, 10, 11]],
     'TTX': [tests[i] for i in [17, 10, 11]],
-    'PARARR': [tests[i] for i in [17]],
-    'TERMO': [tests[i] for i in [15]],
-    'INS': [tests[i] for i in [18]],
-    'COMIC': [tests[i] for i in [19]],
+    'PARARRAYOS': [tests[i] for i in [17]],
+    'TERMOGRAFIA': [tests[i] for i in [15]],
+    'INSPECCION': [tests[i] for i in [18]],
+    'COMISIONADO': [tests[i] for i in [19]],
     'VIAJE': [tests[i] for i in [20]],
-    'RDIEL': [tests[i] for i in [21]],
+    'RIGIDEZ DIELECTRICA': [tests[i] for i in [21]],
     'OTROS': [tests[i] for i in [22]],
 }
 
 nombres_generales = {
     'PT': 'Transformador de Voltaje',
     'CT': 'Transformador de Corriente',
-    'INT': 'Interruptor',
+    'INTERRUPTOR': 'Interruptor',
     'TX': 'Transformador',
     'RX': 'Reactor',
     'TTX': 'Transformador de Tierra',
-    'PARARR': 'Grupo de Pararrayos',
-    'TERMO': 'Patio de 230 y 115',
-    'INS': 'Inspección de Pruebas',
-    'COMIC': 'Comisionado',
+    'PARARRAYOS': 'Grupo de Pararrayos',
+    'TERMOGRAFIA': 'Patio de 230 y 115',
+    'INSPECCION': 'Inspección de Pruebas',
+    'COMISIONADO': 'Comisionado',
     'VIAJE': 'Viaje Realizado',
-    'RDIEL': 'Rigidez Dieléctrica',
+    'RIGIDEZ DIELECTRICA': 'Rigidez Dieléctrica',
     'OTROS': 'Otras Pruebas',
 }
 
@@ -87,7 +87,7 @@ nombre_SE = {
     'CVALES': se+'Los Valles',
     'CESTREL': se+'La Etrella',
     'CPACORA': se+'Pacora',
-    'CBLM1': se+'Bahía Las Minas',
+    'CBLM1': se+'Bahía Las Minas 1',
     'CPAN AM': se+'PANAM',
     'CESTI': se+'Estí',
     'CFORT': se+'Fortuna',
@@ -96,6 +96,7 @@ nombre_SE = {
     'SBARTOLO': se+'San Bartolo',
     'SHIGO': se+'El Higo'
 }
+
 se = 'S/E '
 nombre_SE_corto = {
     'SPANAMA2': se+'Panamá II',
@@ -115,7 +116,7 @@ nombre_SE_corto = {
     'CVALES': se+'Los Valles',
     'CESTREL': se+'La Etrella',
     'CPACORA': se+'Pacora',
-    'CBLM1': se+'Bahía Las Minas',
+    'CBLM1': se+'Bahía Las Minas 1',
     'CPAN AM': se+'PANAM',
     'CESTI': se+'Estí',
     'CFORT': se+'Fortuna',

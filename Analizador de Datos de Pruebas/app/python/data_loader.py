@@ -3,8 +3,9 @@ import sqlite3
 import os
 from python import cells_config
 
-def load_data(db_name:str) -> dict:
-    PLANTILLA_TX = cells_config.PLANTILLA_TX
+def load_data(db_name:str, type:str) -> dict:
+
+    PLANTILLA_TX = cells_config.tipo['Transformador']
     db_dir = os.path.normpath(db_name)
     df_dict = {}
     conn = sqlite3.connect(db_dir)

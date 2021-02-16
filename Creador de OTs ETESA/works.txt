@@ -1,0 +1,1 @@
+Titulo:Inspección Termográfica en Subestación; Libranza:; OT:; Ubicacion:Subestación Chorrera; Tipo:PMA; Clasificacion:PMA; Cuenta:1.51121200.0604.430403.430403.0.0000.0.0000; Prioridad:1; Inicio:02/23/2021 08:00 AM; Duracion:2:00; Supervisor:JBMARTINEZ; 

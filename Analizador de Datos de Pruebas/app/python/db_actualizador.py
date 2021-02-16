@@ -4,7 +4,7 @@ from pathlib import Path
 from python import cells_config
 
 def crear_db_transformador(libro:str, dir_dbs:str, overwrite=True) -> None:
-    plantilla = cells_config.PLANTILLA_TX
+    plantilla = cells_config.tipo['Transformador']
     hojas_plantilla = plantilla['hojas']
     dir_libro = Path(libro)
     excel_data_path = [dir_libro.parents[i] for i in range(len(dir_libro.parts)-1)\

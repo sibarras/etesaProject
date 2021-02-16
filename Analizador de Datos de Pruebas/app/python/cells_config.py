@@ -25,3 +25,16 @@ PLANTILLA_IR = {}
 
 PLANTILLA_OIL = {}
 
+PLANTILLA_PARARRAYOS = {}
+
+tipo = {
+    'Transformador': PLANTILLA_TX,
+    'Interruptor': PLANTILLA_INT,
+    'Transformador de Tierra': PLANTILLA_TTX,
+    'Reactor': PLANTILLA_RX,
+    'Transformador de Corriente': PLANTILLA_CT,
+    'Transformador de Voltaje': PLANTILLA_PT,
+    'Historial Termográfico': PLANTILLA_IR,
+    'Análisis de Aceite': PLANTILLA_OIL,
+    'Pararrayos': PLANTILLA_PARARRAYOS
+}

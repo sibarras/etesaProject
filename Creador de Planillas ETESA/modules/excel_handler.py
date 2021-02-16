@@ -9,8 +9,8 @@ class ExcelHandler:
     def loadWorksheet(self, worksheet_name:str):
         self.ws = self.wb[worksheet_name]
     
-    def save_document(self, output_filename:str, PATH:str):
-        self.wb.save(PATH + '{}.xlsx'.format(output_filename))
+    def save_document(self, output_filename:str, path:str):
+        self.wb.save(path + '{}.xlsx'.format(output_filename))
         self.wb.close()
 
     def excel_to_pdf(self, file_name:str, path:str):
