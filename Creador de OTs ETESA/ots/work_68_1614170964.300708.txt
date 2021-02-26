@@ -1,0 +1,14 @@
+id: 68
+titulo: Medición de Red de Puesta a Tierra en Subestación Caldera
+libranza: 
+ot: 1062288
+ubicacion: CALDERA
+tipo: MPD
+clasificacion: PMA
+cuenta: 1.51121200.0612.430403.430403.0.0000.0.0000
+prioridad: 5
+inicio: 02/22/2021 01:00 PM
+duracion: 5:00
+supervisor: JBMARTINEZ
+mano_de_obra: ['faguirre', 'mmartinez']
+herramientas: 

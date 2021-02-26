@@ -1,0 +1,14 @@
+id: 126
+titulo: Inspección Termográfica en Subestación Veladero
+libranza: 
+ot: 1064006
+ubicacion: VELADERO
+tipo: MPD
+clasificacion: PMA
+cuenta: 1.51121200.0607.430403.430403.0.0000.0.0000
+prioridad: 1
+inicio: 05/04/2021 08:00 AM
+duracion: 4:00
+supervisor: JBMARTINEZ
+mano_de_obra: ['mmartinez', 'faguirre']
+herramientas: TERMOGRAFIA

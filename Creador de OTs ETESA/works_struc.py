@@ -30,10 +30,11 @@ class PMAWork2:
         self.herramientas:str = herramientas
 
 class PMAWork:
+    id:int
     titulo:str
     libranza:str
     ot:str
-    ubiacion:str
+    ubicacion:str
     tipo:str
     clasificacion:str
     cuenta:str
@@ -41,7 +42,7 @@ class PMAWork:
     inicio:str
     duracion:str
     supervisor:str
-    mano_de_obra:list = []
+    mano_de_obra:list
     herramientas:str
 
     def __repr__(self) -> str:

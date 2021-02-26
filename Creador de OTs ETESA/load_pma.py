@@ -1,3 +1,4 @@
+from typing import Reversible
 import pandas as pd
 from pathlib import Path
 import sqlite3
@@ -220,7 +221,6 @@ class PMADataset:
                 and item2['TIPO DE EQUIPO']!='TRANSFORMADOR DE POTENCIA':
                     self.count += 1
                     hour = item1['DURACION']
-                    print(self.count, item2['TIPO DE EQUIPO'])
 
                 dates_df.loc[item2.name,'REPEATED'] = False
             else:
@@ -287,21 +287,43 @@ class PMADataset:
         print('Works dataset creation done!\n')
 
 # Extra
-    def save_works(self, results_name) -> None:
+    def save_works(self, results_name: Path, works_df: pd.DataFrame) -> None:
         print('Saving works...')
-        with pd.ExcelWriter(results_name) as writer:
-            time_format = "%m-%d-%Y %I %M %p"
-            self.works_df.to_excel(writer, sheet_name=datetime.now().strftime(time_format))
+        results_name = str(results_name)
+        time_format = "%m-%d-%Y %I %M %p"
+        timestamp = datetime.now().strftime(time_format)
+        with pd.ExcelWriter(f'{results_name[:-5]} {timestamp}.xlsx') as writer:
+            works_df.to_excel(writer, sheet_name='PMA'+timestamp)
         print('Works saved!\n')
+    
+    def update_database(self, database_name: Path, works_list: list) -> None:
+        print('Updating database...')
+        col = 'Numero de OT'
+        ot = 4
+        with sqlite3.connect(database_name) as conn:
+            c = conn.cursor()
+            for work in works_list:
+                print(work.id, work.ot)
+                c.execute(f"UPDATE {self.TABLE} SET '{col}' = ? WHERE 'index' = ?", (ot, work.id))
+            conn.commit()
+
+            res = c.execute(f'SELECT * from {self.TABLE} WHERE "Numero de OT" NOT NULL')
+            for r in res.fetchall():
+                print(r)
+            print([description[0] for description in res.description])
+            
+        print('Database updated!')
+        
 
     def create_objects(self, works_df: pd.DataFrame) -> list:
         print('Creating work objects...')
         for work in works_df.iloc:
             work_object = PMAWork()
+            work_object.id = work.name
             work_object.titulo = work['TITULO']
             work_object.libranza = work['LIBRANZA']
             work_object.ot = work['OT']
-            work_object.ubiacion = work['UBICACION']
+            work_object.ubicacion = work['UBICACION']
             work_object.tipo = work['TIPO']
             work_object.clasificacion = work['CLASIFICACION']
             work_object.cuenta = work['CUENTA']
@@ -320,22 +342,30 @@ class PMADataset:
 def main() -> None:
     PATH = Path(__file__).parent
     db_file = PATH/'database'/'pma.db'
+    db_modified = PATH/'database'/'pma_modified.db'
     results_excel_path = PATH/'excel'/'results.xlsx'
     df = PMADataset(db_file)
 
-    # Add work details
-    df.add_works_to_df(work_details)
+    # # Add work details
+    # df.add_works_to_df(work_details)
 
-    # Create Works Dataset
-    df.set_works_df()
+    # # Create Works Dataset
+    # df.set_works_df()
 
-    # Saving works
-    df.save_works(results_excel_path)
+    # # Saving works
+    # df.save_works(results_excel_path, df.works_df)
 
-    # Creating objects
-    df.create_objects(df.works_df)
+    # # Creating objects
+    # df.create_objects(df.works_df)
 
-    # Updating excel
+    # # Simulate changing ot number
+    # for work in df.work_list:
+    #     work.ot = '24'
+
+    # # Updating excel
+    # df.update_database(db_modified, df.work_list)
+
+
 
 if __name__ == '__main__':
     main()

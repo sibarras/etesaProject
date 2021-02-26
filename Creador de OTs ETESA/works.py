@@ -44,15 +44,3 @@ works_3 = {
 	"Herramientas":"TERMOGRAFIA",
 }
 
-from datetime import datetime
-
-parse_format = "%Y-%m-%d %H:%M:%S"
-maximo_format = "%m/%d/%Y %I:%M %p"
-
-format_hour_str = lambda date, hour_delta: datetime.strptime(date, parse_format)\
-                                        .replace(
-                                            hour=datetime.strptime(date, parse_format).hour + 
-                                            datetime.strptime(hour_delta, "%H:%M").hour
-                                        ).strftime(maximo_format)
-
-print(format_hour_str('2021-2-12 6:24:00', '4:00'))

@@ -1,0 +1,14 @@
+id: 46
+titulo: Pruebas Eléctricas, Alarmas y Disparos a Transformador de Potencia T-3 en Subestación Mata de Nance
+libranza: 
+ot: 1062238
+ubicacion: MATA DE NANCE
+tipo: MPD
+clasificacion: PMA
+cuenta: 1.51121200.0608.430403.430403.0.0000.0.0000
+prioridad: 9
+inicio: 02/07/2021 08:00 AM
+duracion: 10:00
+supervisor: JBMARTINEZ
+mano_de_obra: ['sibarra', 'mmartinez']
+herramientas: TX

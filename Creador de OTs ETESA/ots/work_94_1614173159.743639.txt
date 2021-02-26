@@ -1,0 +1,14 @@
+id: 94
+titulo: Pruebas Eléctricas a Transformador de Corriente 11A42 en Subestación Panamá
+libranza: 
+ot: 1062339
+ubicacion: PANAMÁ
+tipo: MPD
+clasificacion: PMA
+cuenta: 1.51121200.0602.430403.430403.0.0000.0.0000
+prioridad: 5
+inicio: 03/18/2021 08:00 AM
+duracion: 7:00
+supervisor: JBMARTINEZ
+mano_de_obra: ['psolis', 'mperez']
+herramientas: CT

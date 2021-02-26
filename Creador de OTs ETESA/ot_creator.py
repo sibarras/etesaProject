@@ -1,13 +1,23 @@
+from typing import Tuple
+from openpyxl.reader.excel import ExcelReader
+from openpyxl.styles.cell_style import CellStyle
+from openpyxl.worksheet.worksheet import Worksheet
 from selenium.webdriver import Chrome
 from selenium.webdriver.common.by import By
+from openpyxl import load_workbook
 
 from time import sleep
+from datetime import datetime
 from pathlib import Path
+import pandas as pd
+import tkinter as tk
+from tkinter import messagebox
 
 from secrets import SECRET_PASSWORD, SECRET_USER
 
 from data import places_id, work_tools
 from works_example import works, PMAWork
+from works_struc import PMAWork
 
 
 class WorkFile:
@@ -34,10 +44,10 @@ class WorkFile:
             for row in f.readlines():
                 self.lines.append(row)
                 if 'works_' in row :
-                    num = int(row.lstrip('works_'))
+                    num = int(row.lstrip('works_').split()[0])
                     if num > final_num:
                         final_num = num
-        
+
         self.count = final_num
     
     def __create_file(self):
@@ -61,8 +71,34 @@ class WorkFile:
 
 
 class OTCreator:
-    def __init__(self) -> None:
+    def __init__(self, py_file: WorkFile, excel_file:Path) -> None:
+        self.file = py_file
+        self.xl_file = excel_file
+        self.ot_folder:Path
         self.works = []
+
+        wb = load_workbook(excel_file)
+        self.ws:Worksheet = wb[(wb.sheetnames[0])]
+        self.excel_table:Tuple[Tuple, ...] = self.ws['A15:P304']
+        self.excel_index = lambda id: id+16
+    
+    def set_ot_in_excel(self, ot_number, id):
+        assert -1<=id<289 and type(id) is int
+        wb = load_workbook(self.xl_file.__str__())
+        ws:Worksheet = wb[(wb.sheetnames[0])]
+        for row in ws['O16:O304']:
+            for cell in row:
+                if cell.row == self.excel_index(id):
+                    cell.value = ot_number
+                    wb.save(self.xl_file)
+        wb.close()
+        
+    
+    def popup(self, title, message) -> bool:
+        root = tk.Tk()
+        root.withdraw()
+        ans = messagebox.askyesno(title = title, message = message)
+        return ans
     
     def do(self, id:str, action:str, message:str='', write_validation=True, count=0) -> str:
         sleep(0.5)
@@ -78,6 +114,8 @@ class OTCreator:
                         assert element.get_attribute('value') == message or element.text == message
                 elif action == 'read':
                     return element.get_attribute('value')
+            except KeyboardInterrupt:
+                count = 4
             except Exception:
                 count += 1
                 sleep(count)
@@ -86,12 +124,13 @@ class OTCreator:
             prompt = f"""
                 Existe un problema.
                 No se pudo interactuar con el elemento.
-                Presione q para terminar o n para saltar este elemento y hacerlo manual.
+                Presione No para terminar o Si en caso de ya haberlo hecho de forma manual.
                 Elemento {id} con el objetivo {action}.
             """
-            ans = input(prompt)
-            if ans == 'n':
-                return ''
+            ans = self.popup(title='Error de interaccion.', message=prompt)
+
+            if ans:
+                return '' # Retorna un string porque en la opcion read hace eso.
             else:
                 self.driver.quit()
 
@@ -109,14 +148,26 @@ class OTCreator:
                     self.first_ot()
                 else:
                     self.next_ot()
+                
+                try:
+                    self.ot_page_creator(work)
+                    self.planning_page_creator(work)
+                except Exception as e:
+                    print(f'NO se puedo crear la ot con id {work.id}. Error:', e)
 
-                self.ot_page_creator(work)
-                self.planning_page_creator(work)
                 validation = self.review()
                 if validation:
-                    self.save_and_send()
+                    self.save_and_send() 
+                else:
+                    self.signout()
+                    self.do('m96ad0396-pb', 'click')
+                    sleep(2)
+                    driver.quit()
+                    return
+
 
             self.signout()
+            
         
     def login(self):
         print('Iniciando Sesion')
@@ -134,31 +185,54 @@ class OTCreator:
 
     def ot_page_creator(self, work:PMAWork):
         print('Creando Primera Pagina')
+        sleep(1)
+        self.do('mad3161b5-tb2', 'write', work.titulo)
+        # Obtener el numero de OT
+        sleep(2)
+        ot_number = self.do('mad3161b5-tb', 'read')
+        assert type(int(ot_number)) is int
+        work.ot = ot_number
+        print(f'Titulo: {work.titulo}\nFecha:{work.inicio}\nOT:{work.ot}\n\n')
+        self.works.append(work)
+        try:
+            print('Guardando en txt')
+            self.save_work_txt(work)
+        except Exception as e:
+            print('No se pudo guardar el .txt.', e)
+        try:
+            print('Guardando en .py')
+            self.file.add(work)
+        except Exception as e:
+            print('No se pudo guardar el .py.', e)
+        try:
+            print('Guardando en excel')
+            self.set_ot_in_excel(work.ot, work.id)
+        except Exception as e:
+            print('No se pudo guardar el excel.', e)
 
         # Cargar datos de trabajo
         self.do('mad3161b5-tb2', 'write', work.titulo)
 
-        # Obtener el numero de OT
-        ot_number = self.do('mad3161b5-tb', 'read')
-        work.ot = ot_number
-        self.works.append(work)
-
         # Ubicacion del Equipo
         self.do('m7b0033b9-img', 'click')
         self.do('LOCATIONS_locations0', 'click')
-        self.do('lookup_page1_tfrow_[C:0]_txt-tb', 'write', places_id[work.ubiacion])
+        self.do('lookup_page1_tfrow_[C:0]_txt-tb', 'write', places_id[self.__normalize(work.ubicacion)])
         self.do('lookup_page1-ti2_img', 'click')
         self.do('lookup_page1_tdrow_[C:0]_ttxt-lb[R:0]', 'click')
 
         # Cargamos datos de cuenta y el resto
         self.do("ma26371c5-tb", 'write', work.cuenta)
         self.do("me2096203-tb", 'write', work.tipo)
+        sleep(1)
         self.do("mc8f7970f-tb", 'write', work.clasificacion)
+        sleep(1)
         self.do("m526c8119-tb", 'write', work.libranza)
         self.do("m950e5295-tb", 'write', work.prioridad)
         self.do("m651c06b0-tb", 'write', work.inicio)
+        sleep(1)
         self.do("m8c7fa385-tb", 'write', work.duracion)
         self.do("mb2eb834-tb", 'write', work.supervisor)
+        sleep(1)
 
     def planning_page_creator(self, work:PMAWork):
         print('Creando segunda pagina')
@@ -185,36 +259,51 @@ class OTCreator:
             self.do("m8b93c9ab-tb", 'write', tool_id, write_validation=False)
 
     def review(self):
-        ans = input(
-            "Revise el documento y presione ENTER para continuar...\n" +
-            "Si deseas guardar la orden de trabajo presiona 'y'. Para descartar 'n'."
+        return self.popup(
+            title = 'Revisión del documento',
+            message = 'Revisa el documento detenidamente. Presiona si para continuar, o presiona no para descartar.',
         )
-        return ans=='y' or ans=='Y'
 
     def save_and_send(self):
         print('Guardando y Enrutando')
         self.do('toolactions_SAVE-tbb_image', 'click')
         self.do('ROUTEWF_WOETESA_-tbb_image', 'click')
-
+    
+    def save_work_txt(self, work: PMAWork):
+        timestamp = datetime.timestamp(datetime.now())
+        with open(self.ot_folder/f'work_{work.id}_{timestamp}.txt', 'wt') as f:
+            text = ''
+            for key, val in work.__dict__.items():
+                text += f'{key}: {val}\n'
+            f.write(text)
 
     def signout(self):
         print('Cerrando Sesion')
         self.do("titlebar_hyperlink_8-lbsignout", 'click')
-        sleep(5)
         
-    def add_works_to_file(self, file: WorkFile) -> None:
+    def add_works_to_file(self, file: WorkFile, work: PMAWork) -> None:
         print('Añadiendo archivos a base de datos')
         if len(self.works):
-            for work in self.works:
-                file.add(work)
-        else:
-            print('No works to add.')
+            file.add(work)
+    
+    def get_works_dataframe(self) -> pd.DataFrame:
+        self.df = pd.DataFrame([work.__dict__ for work in self.works])
+        return self.df
 
+    def __normalize(self, sub):
+        return sub.title()\
+                .replace('Iii', 'III')\
+                .replace('Ii', 'II')\
+                .replace('De', 'de')\
+                .replace('Sanchez', 'Sánchez')\
+                .strip()
 
 
 if __name__ == '__main__':
     python_file = Path(__file__).parent/'results'/'works.py'
+    excel_file = Path(__file__).parent/'excel'/'PMA2021_Pruebas_Y_Mediciones_VF.xlsx'
+    # prueba
     file = WorkFile(python_file)
-    maximo = OTCreator()
-    maximo.create_ots(works)
-    maximo.add_works_to_file(file)
+    maximo = OTCreator(file, excel_file)
+    # maximo.create_ots(works)
+    # print(maximo.get_works_dataframe())

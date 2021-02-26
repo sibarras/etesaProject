@@ -1,0 +1,14 @@
+id: 116
+titulo: Análisis de Gas SF6 Asociado a los Bancos de Capacitores a Interruptor 11C1 en Subestación Panamá
+libranza: 
+ot: 1063932
+ubicacion: PANAMÁ
+tipo: MPD
+clasificacion: PMA
+cuenta: 1.51121200.0602.430403.430403.0.0000.0.0000
+prioridad: 1
+inicio: 04/24/2021 08:00 AM
+duracion: 1:00
+supervisor: JBMARTINEZ
+mano_de_obra: ['psolis', 'mperez']
+herramientas: ANALISIS SF6

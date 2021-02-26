@@ -1,0 +1,14 @@
+id: 100
+titulo: Análisis de Calidad de Energía a Línea L.34-115 Panasolar en Subestación Llano Sánchez
+libranza: 
+ot: 1062629
+ubicacion: LLANO SÁNCHEZ
+tipo: MPD
+clasificacion: PMA
+cuenta: 1.51121200.0605.430403.430403.0.0000.0.0000
+prioridad: 1
+inicio: 04/05/2021 08:00 AM
+duracion: 4:00
+supervisor: JBMARTINEZ
+mano_de_obra: ['jbmartinez', 'faguirre']
+herramientas: CALIDAD ENERGIA

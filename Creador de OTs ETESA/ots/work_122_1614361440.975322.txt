@@ -1,0 +1,14 @@
+id: 122
+titulo: Pruebas Eléctricas, Alarmas y Disparos a Transformador de Potencia T-3 en Subestación Panamá
+libranza: 
+ot: 1063998
+ubicacion: PANAMÁ
+tipo: MPD
+clasificacion: PMA
+cuenta: 1.51121200.0602.430403.430403.0.0000.0.0000
+prioridad: 9
+inicio: 04/25/2021 08:00 AM
+duracion: 10:00
+supervisor: JBMARTINEZ
+mano_de_obra: ['sibarra', 'faguirre']
+herramientas: TX

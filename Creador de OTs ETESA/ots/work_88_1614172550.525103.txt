@@ -1,0 +1,14 @@
+id: 88
+titulo: Pruebas Eléctricas, Alarmas y Disparos a Transformador de Potencia T-1 en Subestación Caldera
+libranza: 
+ot: 1062327
+ubicacion: CALDERA
+tipo: MPD
+clasificacion: PMA
+cuenta: 1.51121200.0612.430403.430403.0.0000.0.0000
+prioridad: 9
+inicio: 03/13/2021 08:00 AM
+duracion: 10:00
+supervisor: JBMARTINEZ
+mano_de_obra: ['sibarra', 'psolis']
+herramientas: TX

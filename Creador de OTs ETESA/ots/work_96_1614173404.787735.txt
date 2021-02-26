@@ -1,0 +1,14 @@
+id: 96
+titulo: Análisis de Calidad de Energía a Línea L.230-13a Uep en Subestación Panamá II
+libranza: 
+ot: 1062343
+ubicacion: PANAMÁ II
+tipo: MPD
+clasificacion: PMA
+cuenta: 1.51121200.0601.430403.430403.0.0000.0.0000
+prioridad: 1
+inicio: 03/22/2021 08:00 AM
+duracion: 4:00
+supervisor: JBMARTINEZ
+mano_de_obra: ['psolis', 'sibarra']
+herramientas: CALIDAD ENERGIA

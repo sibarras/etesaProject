@@ -1,0 +1,14 @@
+id: 127
+titulo: Inspección Termográfica en Subestación Bella Vista
+libranza: 
+ot: 1064008
+ubicacion: BELLA VISTA
+tipo: MPD
+clasificacion: PMA
+cuenta: 1.51121200.0608.430403.430403.0.0000.0.0000
+prioridad: 1
+inicio: 05/04/2021 12:00 PM
+duracion: 4:00
+supervisor: JBMARTINEZ
+mano_de_obra: ['faguirre', 'mmartinez']
+herramientas: TERMOGRAFIA

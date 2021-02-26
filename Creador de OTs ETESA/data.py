@@ -13,7 +13,7 @@ places_id = {
     SE+'Bayano':'SE-BYNO',
     SE+'Chorrera':'SE-CHO',
     SE+'Cáceres':'SE-CAC',
-    SE+'Panamá':'SE-PAN',
+    SE+'Panamá':'SE-PANP23',
     SE+'Panamá II':'SE-PAN2',
     SE+'San Bartolo': 'SE-SBA',
     SE+'Los Valles': 'SE-LVALLES',
@@ -96,6 +96,7 @@ work_tools = {
     'CALIDAD ENERGIA': [tools_id[i] for i in [15]],
     'ANALISIS SF6': [tools_id[i] for i in [11]],
     'OTROS': [tools_id[i] for i in []],
+    '': ''
 }
 
 class WorkDetails:

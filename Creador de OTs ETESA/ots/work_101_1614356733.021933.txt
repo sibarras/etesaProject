@@ -1,0 +1,14 @@
+id: 101
+titulo: Análisis de Calidad de Energía a Línea L. 34-140 Hicaco en Subestación Mata de Nance
+libranza: 
+ot: 1063768
+ubicacion: MATA DE NANCE
+tipo: MPD
+clasificacion: PMA
+cuenta: 1.51121200.0608.430403.430403.0.0000.0.0000
+prioridad: 1
+inicio: 04/05/2021 08:00 AM
+duracion: 4:00
+supervisor: JBMARTINEZ
+mano_de_obra: ['mmartinez', 'faguirre']
+herramientas: CALIDAD ENERGIA

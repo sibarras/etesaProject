@@ -1,0 +1,14 @@
+id: 125
+titulo: Inspección Termográfica en Subestación Panamá
+libranza: 
+ot: 1064004
+ubicacion: PANAMÁ
+tipo: MPD
+clasificacion: PMA
+cuenta: 1.51121200.0602.430403.430403.0.0000.0.0000
+prioridad: 1
+inicio: 05/04/2021 08:00 AM
+duracion: 4:00
+supervisor: JBMARTINEZ
+mano_de_obra: ['mperez', 'psolis']
+herramientas: TERMOGRAFIA
