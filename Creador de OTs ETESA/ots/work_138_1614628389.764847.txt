@@ -1,0 +1,14 @@
+id: 138
+titulo: Análisis de Calidad de Energía a Barra Cchh T-1 Barra B en Subestación Boquerón III
+libranza: 
+ot: 1065486
+ubicacion: BOQUERÓN III
+tipo: MPD
+clasificacion: PMA
+cuenta: 1.51121200.0608.430403.430403.0.0000.0.0000
+prioridad: 1
+inicio: 05/17/2021 08:00 AM
+duracion: 4:00
+supervisor: JBMARTINEZ
+mano_de_obra: ['faguirre', 'mmartinez']
+herramientas: CALIDAD ENERGIA

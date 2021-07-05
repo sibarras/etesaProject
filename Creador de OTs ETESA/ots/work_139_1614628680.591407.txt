@@ -1,0 +1,14 @@
+id: 139
+titulo: Inspección Termográfica en Subestación Chorrera
+libranza: 
+ot: 1065504
+ubicacion: CHORRERA
+tipo: MPD
+clasificacion: PMA
+cuenta: 1.51121200.0603.430403.430403.0.0000.0.0000
+prioridad: 1
+inicio: 05/18/2021 08:00 AM
+duracion: 4:00
+supervisor: JBMARTINEZ
+mano_de_obra: ['psolis', 'mperez']
+herramientas: TERMOGRAFIA

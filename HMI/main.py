@@ -18,5 +18,3 @@ if __name__ == "__main__":
     sub.show(delay_ms=1000)
     sub.draw_line(init, end, vtg, close_with_key=True)
     sub.close_windows()
-
-

@@ -1,0 +1,21 @@
+{% extends "payroll/layout.html" %}
+
+{% block body %}
+    
+    <h1>New Payroll</h1>
+
+    {% if substations %}
+
+        <select name="Substations" id="substations"></select>
+
+            {% for subestation in substations %}
+                <option value="{{ substation }}">{{ substation }}</option>
+            {% endfor %}
+
+        </select>  
+
+    {% else %}
+        <div>No substations loaded.</div>
+    {% endif %}
+
+{% endblock %}

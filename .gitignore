@@ -1,4 +1,9 @@
 secret*
-*env/
-*.vscode/
-*__pycache__/
+**env/
+**.vscode/
+**__pycache__/
+**.mypy_cache/
+**database/
+**Excel*/
+**excel/
+**results/

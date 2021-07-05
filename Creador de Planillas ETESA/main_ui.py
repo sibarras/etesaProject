@@ -228,3 +228,4 @@ if __name__ == '__main__':
     ui.actions_setup()
     mainWindow.show()
     sys.exit(app.exec_())
+    

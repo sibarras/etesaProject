@@ -223,13 +223,10 @@ class OTCreator:
         # Cargamos datos de cuenta y el resto
         self.do("ma26371c5-tb", 'write', work.cuenta)
         self.do("me2096203-tb", 'write', work.tipo)
-        sleep(1)
         self.do("mc8f7970f-tb", 'write', work.clasificacion)
-        sleep(1)
         self.do("m526c8119-tb", 'write', work.libranza)
         self.do("m950e5295-tb", 'write', work.prioridad)
         self.do("m651c06b0-tb", 'write', work.inicio)
-        sleep(1)
         self.do("m8c7fa385-tb", 'write', work.duracion)
         self.do("mb2eb834-tb", 'write', work.supervisor)
         sleep(1)
@@ -266,7 +263,7 @@ class OTCreator:
 
     def save_and_send(self):
         print('Guardando y Enrutando')
-        self.do('toolactions_SAVE-tbb_image', 'click')
+        # self.do('toolactions_SAVE-tbb_image', 'click')
         self.do('ROUTEWF_WOETESA_-tbb_image', 'click')
     
     def save_work_txt(self, work: PMAWork):

@@ -26,7 +26,11 @@ def main():
 
     filtered_works = pma.works_df.loc[
         (pma.pma_df['MES'] != 'ENERO').to_numpy()
-        & ~pma.works_df['OT'].notnull()]
+        & ~pma.works_df['OT'].notnull()
+        & ((pma.pma_df['MES'] == 'MAYO').to_numpy()
+        | (pma.pma_df['MES'] == 'JUNIO').to_numpy()
+        | (pma.pma_df['MES'] == 'AGOSTO').to_numpy())
+    ]
     
     print(filtered_works)
     
@@ -38,7 +42,7 @@ def main():
     maximo = OTCreator(file, excel_pma_file)
     maximo.ot_folder = ot_txt_folder
     maximo.create_ots(pma.work_list)
-    pma.save_works(results_file, maximo.get_works_dataframe())
+    pma.save_works(results_file, maximo.get_works_dataframe())  
 
 
 if __name__ == '__main__':
